@@ -45,24 +45,26 @@ class _HomeViewState extends State<HomeView> {
           ),
           body: homeManager.isLoading
               ? const Center(child: LoadingWidget())
-              : ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: homeManager.colleges!.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                          bottom: 20, top: index == 0 ? 20 : 0, right: 20, left: 20),
-                      child: UniversitiyMetaDataCardWidget(
-                        key: ValueKey(index),
-                        domain: homeManager.colleges![index].domains.first,
-                        alphaCode: homeManager.colleges![index].alphaTwoCode,
-                        state: homeManager.colleges![index].stateProvince,
-                        name: homeManager.colleges![index].name,
-                        webpages: homeManager.colleges![index].webPages.first,
-                      ),
-                    );
-                  },
-                ));
+              : homeManager.colleges != null
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: homeManager.colleges!.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.only(
+                              bottom: 20, top: index == 0 ? 20 : 0, right: 20, left: 20),
+                          child: UniversitiyMetaDataCardWidget(
+                            key: ValueKey(index),
+                            domain: homeManager.colleges![index].domains.first,
+                            alphaCode: homeManager.colleges![index].alphaTwoCode,
+                            state: homeManager.colleges![index].stateProvince,
+                            name: homeManager.colleges![index].name,
+                            webpages: homeManager.colleges![index].webPages.first,
+                          ),
+                        );
+                      },
+                    )
+                  : Text(homeManager.message ?? 'server error'));
     });
   }
 }
